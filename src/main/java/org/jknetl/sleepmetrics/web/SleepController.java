@@ -39,6 +39,7 @@ public class SleepController {
 
     @GetMapping("/list")
     public String listSleepRecords(Model model) {
+        model.addAttribute("sleeps", sleepRepo.findAll());
         return "list";
     }
 
@@ -51,6 +52,7 @@ public class SleepController {
 
             return "add";
         }
+        sleepRepo.save(sleep);
         return "redirect:/sleep/list";
     }
 

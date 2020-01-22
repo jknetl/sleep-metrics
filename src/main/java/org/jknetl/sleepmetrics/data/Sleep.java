@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Data
 @Entity
@@ -22,10 +23,14 @@ public class Sleep {
     private LocalDateTime from;
     @NotNull
     @Column(name = "finishedAt")
-
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime till;
 
     private Duration awake = Duration.ZERO; // how long you were awake during the sleep time
+
+    public float getSleepLength() {
+        return ChronoUnit.HOURS.between(from, till) +
+                (((1/60)*ChronoUnit.MINUTES.between(from, till)) - 1/60*awake.toMinutes());
+    }
 
 }
