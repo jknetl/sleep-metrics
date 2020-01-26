@@ -27,8 +27,8 @@
         <td><span th:text="${sleep.getSleepLength()}"> Length </span></td>
         <td><span th:text="${sleep.from.toLocalTime()}"> from </span></td>
         <td><span th:text="${sleep.till.toLocalTime()}"> till </span></td>
-        <td><span th:text="${sleep.awake.toMinutes()}"> Awake </span></td>
-        <td><a href="#edit" th:href="@{/sleep/edit}">edit</a></td>
+        <td><span th:text="${{sleep.awake}}"> Awake </span></td>
+        <td><a href="#edit" th:href="@{/sleep/edit/{id}(id=${sleep.id})}">edit</a></td>
       </tr>
     </tbody>
   </table>

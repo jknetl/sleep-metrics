@@ -1,13 +1,11 @@
 package org.jknetl.sleepmetrics.data;
 
 import lombok.Data;
-import org.springframework.boot.convert.DurationFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 

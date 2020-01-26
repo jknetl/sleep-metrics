@@ -8,15 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/sleep")
@@ -35,6 +33,21 @@ public class SleepController {
         sleep.setAwake(Duration.ZERO);
         model.addAttribute("sleep", sleep);
         return "add";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showAddSleepForm( @PathVariable("id") Long id, Model model) {
+
+        Optional<Sleep> sleep = sleepRepo.findById(id);
+
+        if (sleep.isPresent()) {
+            model.addAttribute("sleep", sleep.get());
+            return "add";
+        } else {
+            //TODO: error handling
+            log.warn("Non implemented yet! (edit on non-existing sleep record)");
+            return "nonimplemented-error";
+        }
     }
 
     @GetMapping("/list")
