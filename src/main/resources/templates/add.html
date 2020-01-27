@@ -14,7 +14,7 @@
     <label for="finished-at">Woke up at:</label>
     <input type="datetime-local" id="finished-at" name="finished-at" th:field="*{till}"> <br>
     <label for="awake">Minutes spent awake</label>
-    <input type="number" id="awake" name="awake" th:field="*{{awake}}">
+    <input type="text" id="awake" name="awake" th:field="*{{awake}}">
 
     <input type="submit" value="Submit">
   </form>
