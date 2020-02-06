@@ -24,7 +24,7 @@
       </tr>
       <tr th:each="sleep : ${sleeps}">
         <td><span th:text="${sleep.from.toLocalDate()}"> Date from </span></td>
-        <td><span th:text="${sleep.getSleepLength()}"> Length </span></td>
+        <td><span th:text="${#numbers.formatDecimal(sleep.getSleepLength(),1,2)}"> Length </span></td>
         <td><span th:text="${sleep.from.toLocalTime()}"> from </span></td>
         <td><span th:text="${sleep.till.toLocalTime()}"> till </span></td>
         <td><span th:text="${{sleep.awake}}"> Awake </span></td>

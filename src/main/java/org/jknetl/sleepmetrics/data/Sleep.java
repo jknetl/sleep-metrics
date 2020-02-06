@@ -27,8 +27,7 @@ public class Sleep {
     private Duration awake = Duration.ZERO; // how long you were awake during the sleep time
 
     public float getSleepLength() {
-        return ChronoUnit.HOURS.between(from, till) +
-                (((1/60)*ChronoUnit.MINUTES.between(from, till)) - 1/60*awake.toMinutes());
+        return (ChronoUnit.MINUTES.between(from,till) - awake.toMinutes())/60f;
     }
 
 }
