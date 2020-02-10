@@ -1,11 +1,9 @@
 package org.jknetl.sleepmetrics.data;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.UniqueElements;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -17,9 +15,11 @@ public class User {
     private Long id;
 
     @NotNull
+    @Column(nullable = false, unique = true)
     private String username;
     @NotNull
     private String password;
     @NotNull
+    @Column(nullable = false, unique = true)
     private String email;
 }

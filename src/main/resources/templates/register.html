@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sleep metrics - register</title>
+</head>
+<body>
+
+<h1>Register</h1>
+
+<form method="POST" action="#" th:action="@{/register}">
+  <label for="username">Username: </label>
+  <input type="text" name="username" id="username"><br>
+  <label for="password">Password</label>
+  <input type="password" name="password" id="password"><br>
+  <label for="confirm">Confirm password</label>
+  <input type="password" name="confirm" id="confirm"><br>
+  <label for="email">e-mail: </label>
+  <input type="email" name="email" id="email"><br>
+  <input type="submit" value="Register">
+</form>
+</body>
+</html>
