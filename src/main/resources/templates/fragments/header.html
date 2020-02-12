@@ -19,13 +19,7 @@
   </head>
   <body>
 
-    <div id="header" th:replace="fragments/header :: header">
-      <!--
-        ====================================================================================================
-        = This content is for static prototyping only! It will be substituted with fragments/header.html   =
-        = at runtime! So edit that file instead.                                                           =
-        ====================================================================================================
-      -->
+    <div id="header" th:fragment="header">
       <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <a class="navbar-brand" href="home.html" th:href="@{/}">Sleep-Metrics</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,20 +47,7 @@
       </nav>
     </div>
 
-    <h1>Register</h1>
-
-    <form method="POST" action="#" th:action="@{/register}">
-      <label for="username">Username: </label>
-      <input type="text" name="username" id="username"><br>
-      <label for="password">Password</label>
-      <input type="password" name="password" id="password"><br>
-      <label for="confirm">Confirm password</label>
-      <input type="password" name="confirm" id="confirm"><br>
-      <label for="email">e-mail: </label>
-      <input type="email" name="email" id="email"><br>
-      <input type="submit" value="Register">
-    </form>
-    <script type="text/javascript" src="../static/js/jquery-3.4.1.min.js" th:src="@{/js/jquery-3.4.1.min.js}"></script>
-    <script type="text/javascript" src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+    <script type="text/javascript" src="../static/js/jquery-3.4.1.min.js" th:href="@{/js/jquery-3.4.1.min.js}"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
   </body>
-</html.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()>
+</html>
