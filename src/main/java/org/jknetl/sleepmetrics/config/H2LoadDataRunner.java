@@ -40,6 +40,19 @@ public class H2LoadDataRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+
+        User user1 = new User();
+        user1.setUsername(env.getProperty("org.jknetl.sleep-metrics.user1.username"));
+        user1.setPassword(passwordEncoder.encode(env.getProperty("org.jknetl.sleep-metrics.user1.password")));
+        user1.setEmail(env.getProperty("org.jknetl.sleep-metrics.user1.email"));
+        userRepo.save(user1);
+
+        User user2 = new User();
+        user2.setUsername(env.getProperty("org.jknetl.sleep-metrics.user2.username"));
+        user2.setPassword(passwordEncoder.encode(env.getProperty("org.jknetl.sleep-metrics.user2.password")));
+        user2.setEmail(env.getProperty("org.jknetl.sleep-metrics.user2.email"));
+        userRepo.save(user2);
+
         LocalDateTime now = LocalDateTime.now();
         for (int i = 0; i < NUMBER_OF_RECORDS; i++) {
             Sleep s = new Sleep();
@@ -48,14 +61,9 @@ public class H2LoadDataRunner implements ApplicationRunner {
             s.setFrom(LocalDateTime.of(day, LocalTime.of(random.nextInt(2) + 22,random.nextInt(60))));
             s.setTill(LocalDateTime.of(day.plusDays(1), LocalTime.of(7,0)));
             s.setAwake(Duration.ofMinutes(random.nextInt(30)));
+            s.setUser(user1);
             sleepRepo.save(s);
         }
 
-        User testUser = new User();
-        testUser.setUsername(env.getProperty("org.jknetl.sleep-metrics.test-user.username"));
-        testUser.setPassword(passwordEncoder.encode(env.getProperty("org.jknetl.sleep-metrics.test-user.password")));
-        testUser.setEmail(env.getProperty("org.jknetl.sleep-metrics.test-user.email"));
-
-        userRepo.save(testUser);
     }
 }

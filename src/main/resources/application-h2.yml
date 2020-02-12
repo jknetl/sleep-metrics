@@ -10,7 +10,11 @@ spring:
 org:
   jknetl:
     sleep-metrics:
-      test-user:
+      user1:
         username: 'user'
         password: 'password'
         email: 'aa@bb.com'
+      user2:
+        username: 'admin'
+        password: 'password'
+        email: 'ab@bb.com'

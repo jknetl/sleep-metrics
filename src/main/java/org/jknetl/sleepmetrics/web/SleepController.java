@@ -2,7 +2,9 @@ package org.jknetl.sleepmetrics.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jknetl.sleepmetrics.data.Sleep;
+import org.jknetl.sleepmetrics.data.User;
 import org.jknetl.sleepmetrics.repo.SleepRepository;
+import org.jknetl.sleepmetrics.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,6 +26,8 @@ public class SleepController {
 
     @Autowired
     private SleepRepository sleepRepo;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/add")
     public String showAddSleepForm(Model model) {
@@ -51,13 +56,20 @@ public class SleepController {
     }
 
     @GetMapping("/list")
-    public String listSleepRecords(Model model) {
-        model.addAttribute("sleeps", sleepRepo.findAll());
+    public String listSleepRecords(Model model, Principal principal) {
+        String username = principal.getName();
+        User user = userRepository.findUserByUsername(username).orElseThrow(() -> new RuntimeException("Cannot find user: " + username));
+
+        model.addAttribute("sleeps", sleepRepo.findByUser(user));
         return "list";
     }
 
     @PostMapping("/add")
-    public String processSleepRecord(@ModelAttribute Sleep sleep, Errors errors) {
+    public String processSleepRecord(@ModelAttribute Sleep sleep, Principal principal, Errors errors) {
+
+        String username = principal.getName();
+        User user = userRepository.findUserByUsername(username).orElseThrow(() -> new RuntimeException("Cannot find user: " + username));
+
         if (errors.hasErrors()) {
             for (ObjectError e : errors.getAllErrors()) {
                 log.info("Error in sleep record input: " + e);
@@ -65,6 +77,7 @@ public class SleepController {
 
             return "add";
         }
+        sleep.setUser(user);
         sleepRepo.save(sleep);
         return "redirect:/sleep/list";
     }
