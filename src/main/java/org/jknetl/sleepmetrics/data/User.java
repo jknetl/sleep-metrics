@@ -1,6 +1,7 @@
 package org.jknetl.sleepmetrics.data;
 
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
@@ -26,5 +27,6 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy = "user")
+    @ToString.Exclude
     private List<Sleep> sleepRecords;
 }

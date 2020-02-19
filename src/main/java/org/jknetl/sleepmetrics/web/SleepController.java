@@ -12,6 +12,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -30,13 +31,16 @@ public class SleepController {
     private UserRepository userRepository;
 
     @GetMapping("/add")
-    public String showAddSleepForm(Model model) {
+    public String showAddSleepForm(Model model, Principal principal) {
+        String username = principal.getName();
+        User user = userRepository.findUserByUsername(username).orElseThrow(() -> new RuntimeException("Cannot find user: " + username));
 
         Sleep sleep = new Sleep();
         sleep.setFrom(LocalDateTime.of(LocalDate.now().minusDays(1), LocalTime.of(22, 00)));
         sleep.setTill(LocalDateTime.of(LocalDate.now(), LocalTime.of(7,0)));
         sleep.setAwake(Duration.ZERO);
         model.addAttribute("sleep", sleep);
+        model.addAttribute("uid", user.getId());
         return "add";
     }
 
@@ -65,7 +69,7 @@ public class SleepController {
     }
 
     @PostMapping("/add")
-    public String processSleepRecord(@ModelAttribute Sleep sleep, Principal principal, Errors errors) {
+    public String processSleepRecord(@ModelAttribute @Valid Sleep sleep, Errors errors, Principal principal) {
 
         String username = principal.getName();
         User user = userRepository.findUserByUsername(username).orElseThrow(() -> new RuntimeException("Cannot find user: " + username));

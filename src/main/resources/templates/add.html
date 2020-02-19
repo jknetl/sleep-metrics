@@ -63,13 +63,19 @@
       <h1>Add a sleep record</h1>
 
       <form action="#" method="POST" th:action="@{/sleep/add}" th:object="${sleep}">
-        <input type="hidden" name="id" value="null" th:value="*{id}">
+        <input type="hidden" name="user" id="user" value="null" th:value="${uid}">
         <label for="started-at">Fell asleep at:</label>
-        <input type="datetime-local" id="started-at" name="started-at" th:field="*{from}"> <br>
+        <input type="datetime-local" id="started-at" name="started-at" th:field="*{from}">
+        <span class="error" th:if="${#fields.hasErrors('from')}" th:errors="*{from}"></span>
+        <br>
         <label for="finished-at">Woke up at:</label>
-        <input type="datetime-local" id="finished-at" name="finished-at" th:field="*{till}"> <br>
+        <input type="datetime-local" id="finished-at" name="finished-at" th:field="*{till}">
+        <span class="error" th:if="${#fields.hasErrors('till')}" th:errors="*{till}"></span>
+        <br>
         <label for="awake">Minutes spent awake</label>
         <input type="text" id="awake" name="awake" th:field="*{{awake}}">
+        <span class="error" th:if="${#fields.hasErrors('awake')}" th:errors="*{awake}"></span>
+        <br>
 
         <input type="submit" value="Submit">
       </form>

@@ -1,6 +1,7 @@
 package org.jknetl.sleepmetrics.data;
 
 import lombok.Data;
+import org.jknetl.sleepmetrics.config.DurationConstraint;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -23,10 +24,12 @@ public class Sleep {
     @Column(name = "finishedAt")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime till;
+
     @ManyToOne
     @NotNull
     private User user;
 
+    @DurationConstraint(min = 0)
     private Duration awake = Duration.ZERO; // how long you were awake during the sleep time
 
     public float getSleepLength() {
