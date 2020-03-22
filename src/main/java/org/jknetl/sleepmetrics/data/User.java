@@ -2,10 +2,12 @@ package org.jknetl.sleepmetrics.data;
 
 import lombok.Data;
 import lombok.ToString;
-import org.hibernate.validator.constraints.UniqueElements;
+import org.jknetl.sleepmetrics.config.UniqueField;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
@@ -17,13 +19,18 @@ public class User {
     private Long id;
 
     @NotNull
-    @Column(unique = true)
+    @Column(unique = true, length = 30)
+    @Size(min = 4, max = 30)
+    @UniqueField(field = "username")
     private String username;
     @NotNull
+    @Size(min = 6)
     private String password;
 
     @NotNull
     @Column(unique = true)
+    @Email
+    @UniqueField(field = "email")
     private String email;
 
     @OneToMany(mappedBy = "user")

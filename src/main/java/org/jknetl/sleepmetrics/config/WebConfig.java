@@ -2,12 +2,13 @@ package org.jknetl.sleepmetrics.config;
 
 import ch.mfrey.thymeleaf.extras.with.WithDialect;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.thymeleaf.spring5.SpringTemplateEngine;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -40,5 +41,23 @@ public class WebConfig implements WebMvcConfigurer {
     public WithDialect withDialect() {
         return new WithDialect();
     }
+
+    /**
+     * Provides auto-wiring capabilities for validators Checkout: https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#validation-beanvalidation-spring
+     */
+    @Bean
+    public LocalValidatorFactoryBean validatorFactoryBean(MessageSource messageSource) {
+        LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
+        localValidatorFactoryBean.setValidationMessageSource(messageSource);
+        return localValidatorFactoryBean;
+    }
+
+
+//    @Bean
+//    public MethodValidationPostProcessor methodValidationPostProcessor() {
+//        MethodValidationPostProcessor methodValidationPostProcessor = new MethodValidationPostProcessor();
+//        methodValidationPostProcessor.setValidator(validatorFactoryBean());
+//        return methodValidationPostProcessor;
+//    }
 
 }
